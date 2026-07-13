@@ -81,7 +81,26 @@ What is Singleton?
 Definition:
 
 Singleton is a service lifetime where the DI container creates only one instance of the service and shares that same instance across all HTTP requests for the entire lifetime of the application.
+1. Configuration Service
+appsettings.json
+3. Logger Configuration
 
+The application's logging configuration is the same for everyone.
+
+There's no need to create a new configuration object for each request.
+
+what is application lifetime?
+When you deploy your ASP.NET Core application to IIS, Azure, Docker, or another server:
+The application starts running.
+It begins accepting HTTP requests.
+This is the start of the application lifetime.
+It continues running until:
+You stop the application.
+You restart the server.
+You redeploy a new version.
+The application crashes or is recycled by the server.
+
+Then the application lifetime ends.
 
 
 
