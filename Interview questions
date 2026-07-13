@@ -1,0 +1,90 @@
+what is dependency injection ? Explain
+Dependency Injection is a design pattern in which a class receives its required objects from outside instead of creating them itself. 
+For example, if a Car needs an Engine, instead of writing new Engine() inside the Car class, we create the Engine outside and pass it through the constructor. 
+This reduces coupling, makes the code easier to maintain, allows us to replace implementations easily, and improves unit testing.
+
+Example 
+public interface IEngine
+{
+    void Start();
+}
+
+
+With DI and an Interface (Loosely Coupled)
+public interface IEngine
+{
+    void Start();
+}
+
+Now create implementations:
+
+public class PetrolEngine : IEngine
+{
+    public void Start() { }
+}
+
+public class DieselEngine : IEngine
+{
+    public void Start() { }
+}
+
+public class ElectricEngine : IEngine
+{
+    public void Start() { }
+}
+The Car class stays the same:
+
+public class Car
+{
+    private IEngine engine;
+
+    public Car(IEngine engine)
+    {
+        this.engine = engine;
+    }
+}
+
+Now you can do:
+Car car1 = new Car(new PetrolEngine());
+Car car2 = new Car(new DieselEngine());
+Car car3 = new Car(new ElectricEngine());
+Notice that the Car class was never modified.
+So why is it loosely coupled?
+Because Car depends only on the IEngine interface, not on a specific engine implementation.
+
+If you create a new HybridEngine, you don't change Car.
+You don't change IEngine either (unless you want to add new methods to the interface).
+You simply create:
+If the interviewer asks "How does it make the application loosely coupled?", continue with:
+The class depends on an interface rather than a concrete class. For example, if Car depends on IEngine, I can inject PetrolEngine, DieselEngine, or ElectricEngine without changing the Car class. 
+I only change the implementation that's registered with the DI container.
+
+What is Transient ?
+A Transient service creates a new object every time it is resolved by the DI container. It does not create a new object every time a method is called on an existing instance.
+Transient is a service lifetime in ASP.NET Core Dependency Injection. When a service is registered as Transient, the DI container creates a new instance every time the service is resolved.
+It is generally used for lightweight, stateless services.
+Resolving a service means the DI container creates or returns an instance of the requested service.
+
+what is a lifetime service?
+A service lifetime defines how long an object created by the Dependency Injection (DI) container should exist before it is discarded or recreated.
+
+what is scope service?
+We use Scoped services when the same service instance should be shared throughout a single HTTP request but not across different requests.
+It is commonly used for DbContext, repositories, and business services because all operations within one request use the same object, ensuring consistency and avoiding unnecessary object creation. 
+A new instance is created for each new HTTP request
+
+DbContext represents a unit of work for a single request and is not thread-safe. Registering it as Scoped ensures each HTTP request gets its own DbContext instance, preventing data conflicts and concurrency 
+issues while keeping all database operations within that request consistent.
+
+What is Singleton?
+
+Definition:
+
+Singleton is a service lifetime where the DI container creates only one instance of the service and shares that same instance across all HTTP requests for the entire lifetime of the application.
+
+
+
+
+
+
+
