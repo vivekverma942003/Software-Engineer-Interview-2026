@@ -98,7 +98,10 @@ intBox.Value = 10;
 Box<string> strBox = new Box<string>();
 strBox.Value = "Hello";
 
-
+What is async await in .net?
+async and await are keywords in C# used to write asynchronous code. They allow long-running operations — like database calls or API calls — to run without blocking the main thread. 
+So while that operation is in progress, the main thread is free to do other work, keeping the application responsive. Once the operation completes, execution resumes from where it left off,
+usually on a thread pool thread.
 
 
 
