@@ -1,0 +1,110 @@
+What are the Different data types in C#?
+C# has two types of data types — value types and reference types. Value types like int, float, double, bool, char, struct, and enum store data directly and live on the stack. 
+Reference types like class, array, interface, and delegate store a reference to data on the heap.
+String is an exception — it's technically a reference type, but since it's immutable, it behaves like a value type."
+
+
+What is the difference between class and struct?"
+"The main difference is that class is a reference type and struct is a value type.
+A class is allocated on the heap, and the variable holds a reference to it. So when I pass a class object to a method or assign it to another variable, both variables point to the same object — any change through one reflects in the other.
+A struct is allocated on the stack, and it holds the actual data. So when I assign a struct to another variable or pass it to a method, a completely independent copy is created — changes in one don't affect the other.
+
+
+const is a compile-time constant, value fixed at declaration, implicitly static. readonly is a runtime constant, value can be set at declaration or in constructor, and can differ per instance. 
+static means the member belongs to the class, shared across all instances, and its value can still change unless combined with const or readonly.
+
+What are delegates? (with example)"
+"A delegate is a type-safe function pointer — it holds a reference to a method and lets me call that method through the delegate, or pass it around like a variable."
+public delegate int MathOperation(int a, int b);
+public int Add(int a, int b) => a + b;
+public int Subtract(int a, int b) => a - b;
+
+// Step 3: Assign method to delegate and invoke
+MathOperation op = Add;
+int result = op(5, 3);   // result = 8
+
+
+
+What are events in C#?
+An event is a way for a class to notify other classes or objects when something happens, using the publisher-subscriber model. 
+Internally, events are built on top of delegates — an event is basically a delegate with restricted access, so outside code can only subscribe or unsubscribe to it, but can't directly invoke 
+it or overwrite other subscribers.
+An event is a way for a class to notify other classes or objects when something happens, using the publisher-subscriber model. Internally, events are built on top of delegates — an event is basically a 
+delegate with restricted access, so outside code can only subscribe or unsubscribe to it, but can't directly invoke it or overwrite other subscribers.
+op = Subtract;
+result = op(5, 3);       // result = 2
+
+
+What is a lambda expression?
+A lambda expression is a shorthand way to write an anonymous method — a method without a name — using the => syntax, called the 'goes to' operator. It makes the code more concise and readable,
+especially when I'm passing a small piece of logic as a parameter, like in LINQ queries or delegates.
+
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+var evenNumbers = numbers.Where(n => n % 2 == 0).ToList();
+
+
+Explain LINQ.?
+"LINQ stands for Language Integrated Query. It's a feature in C# that lets me query data — from collections, databases, XML, or any data source — using a consistent, 
+SQL-like syntax directly in C#, instead of writing separate query logic for each data source.
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
+
+var evenNumbers = numbers.Where(n => n % 2 == 0)
+                          .OrderByDescending(n => n)
+                          .ToList();
+
+// Output: 6, 4, 2
+
+IEnumerable executes the query in memory — on the client side. So if I'm querying a database using IEnumerable, it first pulls all the data into memory, and then applies the filtering, sorting, etc.
+This is suited for querying in-memory collections like List or Array.
+
+IQueryable executes the query on the data source itself — like the database. It builds an expression tree and translates it into SQL, so filtering, sorting, and paging all happen at the database level, 
+and only the final result is brought into memory. This is more efficient for querying large datasets from a database using Entity Framework.
+
+IEnumerable<Employee> emp1 = dbContext.Employees.ToList();
+var result1 = emp1.Where(e => e.Salary > 50000);
+
+// IQueryable - filtering happens in the database itself
+IQueryable<Employee> emp2 = dbContext.Employees;
+var result2 = emp2.Where(e => e.Salary > 50000);
+
+
+What are Extension Methods?
+Extension methods let me add new methods to an existing type — including built-in types or types I don't own the source code for — without modifying the original type or creating a new derived type.
+They're defined as static methods in a static class, and the first parameter uses the this keyword to specify which type is being extended.
+public static class StringExtensions
+{
+    public static bool IsValidEmail(this string str)
+    {
+        return str.Contains("@") && str.Contains(".");
+    }
+}
+
+// Usage - looks like it's a built-in method on string
+string email = "test@gmail.com";
+bool result = email.IsValidEmail();   // true
+
+
+What are Generics?
+Generics let me write a class, method, or interface that works with any data type, without specifying the exact type in advance. Instead, the type is provided when I actually use it — this gives type 
+safety at compile time and avoids boxing/unboxing, while also letting me reuse the same code for different data types.
+class Box<T>
+{
+    public T Value;
+}
+
+Box<int> intBox = new Box<int>();
+intBox.Value = 10;
+
+Box<string> strBox = new Box<string>();
+strBox.Value = "Hello";
+
+
+
+
+
+
+
+
+
+
+
