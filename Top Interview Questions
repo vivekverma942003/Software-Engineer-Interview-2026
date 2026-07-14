@@ -104,8 +104,61 @@ So while that operation is in progress, the main thread is free to do other work
 usually on a thread pool thread.
 
 
+what is request pipeline?
+When a request comes in, Kestrel — the built-in web server — receives it first, then hands it off to the middleware pipeline. Each middleware component gets a chance to inspect or modify the request,
+do some work, and then either pass it to the next middleware using next(), or short-circuit the pipeline and return a response immediately without going further.
+
+What is Kestrel?
+Yes, exactly right. Kestrel is the web server that receives the HTTP request first — it's the entry point of an ASP.NET Core application. Once Kestrel receives the request,
+it hands it off to the ASP.NET Core middleware pipeline, which then processes it through the various middleware components — like exception handling, routing, authentication, 
+authorization — before finally reaching the controller/endpoint that generates the response
+
+What is RestAPi ?
+REST API is an architectural style used to design web services that communicate over HTTP. Every resource — like an Employee or Order — is identified by a unique URL, and clients interact with
+these resources using standard HTTP methods: GET to retrieve, POST to create, PUT to update the entire resource, 
+PATCH to update it partially, and DELETE to remove it http methods like get/put/post patch/delete
+
+What are HTTP methods?
+Interview Answer — "What are HTTP methods?"
+HTTP methods, also called HTTP verbs, define the type of action a client wants to perform on a resource identified by a URL. They're the foundation of how REST APIs work — each method maps to a specific 
+operation like creating, reading, updating, or deleting data
 
 
+Database First :-
+In Database First, the database already exists — maybe created by a DBA or an existing legacy system — and I generate my C# entity classes automatically by scaffolding them from the existing database schema.
+Code First :- 
+In Code First, I start by writing C# entity classes, and EF generates the database schema from those classes using Migrations. This is the approach I use most often, especially in new projects, because it keeps the database
+schema in sync with the code — I write my model, run a migration, and the database gets created or updated automatically.
+
+
+What is DbContext?
+DbContext is the main class in Entity Framework Core that represents a session with the database. It's the bridge between my C# code and the actual database —
+I use it to query data, save changes, and manage the connection, all through this single class
+DbContext automatically tracks changes made to entities I've retrieved — like if I fetch an Employee and modify its Salary property, DbContext knows this object has changed, even before I call SaveChanges()
+Each DbSet<T> property inside DbContext represents a table in the database. I query and manipulate data through these DbSets.
+
+what is DbSet<T>?
+DbSet<T> represents a collection of entities of a specific type — basically, it maps to a table in the database. Each DbSet property inside my DbContext corresponds to one table, and I use it to query, add, 
+update, or delete records for that entity
+
+Difference between First() and FirstOrDefault()?
+
+
+Difference between lazyloading and eager loading?
+Lazy Loading means related data isn't loaded until I access it — the navigation property needs to be marked virtual, and I need to enable UseLazyLoadingProxies(). It's inefficient because accessing related data
+for multiple records fires separate queries for each one — the N+1 query problem. Eager Loading, using .Include(), loads everything upfront in a single SQL query with a JOIN — so I get the main entity and its 
+related data together in one round-trip, which is much more efficient.
+
+
+What is explicit loading?
+Explicit Loading means related data is NOT loaded automatically — I have to write code myself to explicitly load it, exactly when I want. It's similar to Lazy Loading in that the related data isn't fetched with 
+the main query, but instead of it loading automatically the moment I access the property, I manually trigger the load using a specific command
+
+
+What is tracking vs notracking?
+By default, EF Core tracks every entity it retrieves from the database — this is called Tracking. Tracking means EF Core keeps a record of the entity's original state in memory, so it can detect any changes made to it later and generate the correct SQL when I call SaveChanges(). NoTracking tells EF Core NOT to keep track of these entities — useful when I only need to read data and won't be updating it."
+Tracking (Default behavior)
+When I query data normally, EF Core automatically starts tracking each entity returned. It stores a snapshot of the original values internally in something called the Change Tracker.
 
 
 
