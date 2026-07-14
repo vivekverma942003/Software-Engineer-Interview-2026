@@ -1,0 +1,50 @@
+Difference between DELETE, TRUNCATE, DROP.\
+"DELETE is a DML (Data Manipulation Language) command — it removes specific rows from a table based on a WHERE condition. If I don't specify a WHERE clause, it deletes all rows
+, but the table structure remains intact.
+
+TRUNCATE is a DDL (Data Definition Language) command — it removes ALL rows from a table at once, but keeps the table structure intact. 
+Unlike DELETE, I can't use a WHERE clause with TRUNCATE — it always removes everything
+
+DROP is also a DDL command, but it's the most destructive — it removes the ENTIRE table, including its structure, data, indexes, and constraints.
+After DROP, the table no longer exists in the database at all
+
+What are Stored Procedures?
+A Stored Procedure is a precompiled set of SQL statements stored in the database, which I can call by name whenever I need to execute that logic — 
+instead of writing and sending raw SQL queries from the application every time
+Stored Procedures are precompiled and their execution plan is cached by the database, so repeated calls execute faster compared to sending raw ad-hoc SQL queries every time.
+Business logic involving complex queries can be centralized in the database — multiple applications or services can call the same stored procedure instead of duplicating the same SQL logic in different codebases
+
+
+What are Views?
+virtual table to create virtual data it saves us from writing the repetitive code 
+it saves us from security purpose we create a view and give it to someone who should not be view the sensitive information;
+So to directly answer — a normal View just saves me from writing repetitive SQL and helps with security/abstraction, it does NOT make queries faster on its own, since it re-runs the same query underneath every time.
+Only an Indexed or Materialized View actually improves performance, because it physically stores the precomputed result instead of recalculating it every time
+
+
+What is CTE?
+Yes, exactly right — a CTE, or Common Table Expression, is used to break down a large, complex query into smaller, more readable, named parts. Instead of writing deeply nested subqueries, 
+WITH HighSalaryEmployees AS (
+    SELECT Id, Name, Salary FROM Employees WHERE Salary > 50000
+)
+SELECT * FROM HighSalaryEmployees WHERE Name LIKE 'J%';
+"Here, instead of writing one big nested query, I split it into a clear CTE fiI define a CTE using the WITH clause, giving a name to that intermediate result, and then reference it in my main 
+query — just like a temporary table
+
+
+what is normalisation?
+Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. It involves breaking down a large table into smaller, related tables, and defining 
+relationships between them using Foreign Keys — so that the same piece of data isn't unnecessarily duplicated across multiple rows.
+
+
+What are Transactions?
+A Transaction is a group of one or more SQL operations that are executed together as a single unit of work — either ALL of them succeed and get saved, or if any one fails,
+ALL of them get rolled back, leaving the database unchanged. This ensures data stays consistent, especially in operations involving multiple related steps.
+
+
+What is ACID peroperties?
+Atomocity either all operations passed or failed 
+consistency before and after transaction the database must be valid
+Isoloation multiple transaction running at the same time does not interfere with each other 
+Durability:- urability means once a transaction is committed, the changes are permanent — even if the system crashes immediately afterward, the committed data will not be lost.
+It's typically achieved through mechanisms like transaction log
