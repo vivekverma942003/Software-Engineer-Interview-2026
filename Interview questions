@@ -157,4 +157,63 @@ In my project, we used a Generic Repository so that one repository implementatio
 instead of creating separate repository classes for each entity.
 This improves code reusability, reduces duplication, and makes the application easier to maintain.
 
+const
+const is a compile-time constant whose value must be assigned at the time of declaration and cannot be changed later.
+
+static readonly is a runtime constant shared by all objects of a class. It is initialized once during declaration or in the static constructor and cannot be modified afterward.
+var is a compile-time feature where the compiler automatically determines the variable's type from the assigned value.
+
+dynamic is a runtime feature where type checking is performed during execution instead of at compile time.
+object is the base class of all .NET types. It can store any value or reference type, but requires explicit casting to access the original type.
+
+What is Reflection?
+Reflection allows you to examine and interact with classes, methods, properties, and assemblies during runtime, even if you don't know them at compile time.
+
+Stack Vs HEap in terms of value and type variable?
+"When I create a value type, like an int, the value itself is stored on the stack. When I create a reference type,
+like an object with new, the actual object goes on the heap, and only a reference — basically an address — to that object is stored on the stack.
+int a = 5;              // 5 is stored directly on the stack
+Person p = new Person(); // the Person object is on the heap
+                          // 'p' itself (the reference/address) sits on the stack
+
+
+What are Extension Methods?
+Extension methods allow us to add new methods to existing data types (without modifying their original code), and we can use them anywhere in the application — as long as we import the namespace where the 
+extension method is defined, using the using directive.
+using System;
+
+public static class Event
+{
+    public static bool checkEven(this int num)
+    {
+        return num % 2 == 0;
+    }
+}
+
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Start small. Ship something.");
+
+        int n = 9;
+        bool result = n.checkEven();
+        Console.WriteLine(result);   // False
+    }
+}
+
+Extension methods will always be static in nature 
+
+What is Events and Delegates explain it in detail?
+
+
+
+What is thread ?
+A thread is an independent path of execution within a process, created and managed by the operating system. Each thread has its own call stack and runs code sequentially, and the OS scheduler decides when 
+each thread actually gets CPU time.
+
+what is a task?
+A Task is a higher-level abstraction representing asynchronous work that will complete eventually. It may use a thread from the thread pool for CPU-bound work, but for I/O-bound work, 
+it can run without blocking any thread at all while waiting.
+
 
