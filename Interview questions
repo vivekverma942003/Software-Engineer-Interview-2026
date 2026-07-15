@@ -1,7 +1,7 @@
 what is dependency injection ? Explain
-Dependency Injection is a design pattern in which a class receives its required objects from outside instead of creating them itself. 
-For example, if a Car needs an Engine, instead of writing new Engine() inside the Car class, we create the Engine outside and pass it through the constructor. 
-This reduces coupling, makes the code easier to maintain, allows us to replace implementations easily, and improves unit testing.
+Dependency Injection is a design principle used to build loosely coupled applications. Instead of a class creating the objects it depends on internally using new, those dependencies are created outside the class and passed in — most commonly through the constructor.
+In practice, the dependency is usually declared as an interface, not a concrete class. So the class doesn't depend on a specific implementation — it depends on a contract. Any class that implements that interface can be injected, and the dependent class doesn't need to know or care which one it actually got — it just calls the interface's methods, and the correct implementation runs at runtime through polymorphism.
+This gives us loose coupling: I can swap implementations, inject mock objects for unit testing, and follow the Single Responsibility and Dependency Inversion principles — since the class depends on an abstraction, not a concrete type
 
 Example 
 public interface IEngine
@@ -211,6 +211,17 @@ What is Events and Delegates explain it in detail?
 What is thread ?
 A thread is an independent path of execution within a process, created and managed by the operating system. Each thread has its own call stack and runs code sequentially, and the OS scheduler decides when 
 each thread actually gets CPU time.
+
+
+
+const     Value fixed at compile time. Must be assigned at declaration. Can never change.
+readonly  Value fixed at runtime, but can be assigned once — either at declaration or inside the constructor. Cannot change after that.
+staticHas nothing to do with immutability. It means the member belongs to the class itself, not to any individual instance — shared across all objects. A static field can absolutely be changed at runtime,
+          unless you also mark it readonly or make it a const.
+
+
+
+
 
 what is a task?
 A Task is a higher-level abstraction representing asynchronous work that will complete eventually. It may use a thread from the thread pool for CPU-bound work, but for I/O-bound work, 
